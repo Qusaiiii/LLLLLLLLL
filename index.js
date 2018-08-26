@@ -479,7 +479,7 @@ client.on('message',async message => {
 let mention = message.mentions.members.first();
 let acRoom = client.channels.get('483267969867055115');
 if(message.content.startsWith(prefix + "رفض")) {
-if(message.guild.id !== '468068936848637972') return;
+if(message.guild.id !== '339856040638283797') return;
 if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return;
 if(!mention) return message.reply("منشن شخص");
 
@@ -497,7 +497,7 @@ client.on('message',async message => {
   let mySupport = message.guild.roles.find('name',role);
   let acRoom = client.channels.get('483268290957934593');
   if(message.content.startsWith(prefix + "قبول")) {
-    if(message.guild.id !== '468068936848637972') return;
+    if(message.guild.id !== '339856040638283797') return;
     if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return;
     if(!mention) return message.reply('منشن شخص');
     if(!role) return message.reply('ادخل اسم رتبة');
@@ -518,10 +518,10 @@ client.on("message", (message) => {
     
     if (isCommand(message, "new")) {
         const reason = message.content.split(" ").slice(1).join(" ");
-        if (!message.guild.roles.exists("name", "♦ Discord Staff")) return message.channel.send(`This server doesn't have a \`Support Team\` role made, so the ticket won't be opened.\nIf you are an administrator, make one with that name exactly and give it to users that should be able to see tickets.`);
+        if (!message.guild.roles.exists("name", "◆ Discord Staff")) return message.channel.send(`This server doesn't have a \`Support Team\` role made, so the ticket won't be opened.\nIf you are an administrator, make one with that name exactly and give it to users that should be able to see tickets.`);
         if (message.guild.channels.exists("name", "ticket-" + message.author.id)) return message.channel.send(`:x: **بالفعل لديك تذكرة **`);
         message.guild.createChannel(`ticket-${message.author.id}`, "text").then(c => {
-            let role = message.guild.roles.find("name", "♦ Disord Staff");
+            let role = message.guild.roles.find("name", "◆ Disord Staff");
             let role2 = message.guild.roles.find("name", "@everyone");
             c.overwritePermissions(role, {
                 SEND_MESSAGES: true,
@@ -605,6 +605,7 @@ if(message.content.startsWith(prefix + 'sug')) {
            client.channels.get("483268023755603988").send(embed)
   message.channel.sendEmbed(embet).then(message => {message.delete(50000)})
             message.react("📩")
+	    client.react(":481934332693577730:")
 }
 });
 client.on('message', message => {
