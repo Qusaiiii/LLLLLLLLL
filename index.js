@@ -559,3 +559,4 @@ var embed = new Discord.RichEmbed()
 acRoom.send(embed);
 }
 });
+client.login('NDgzMjQwMTY2MzkyMDcwMTQ0.DmQxqg.WpsTUPAymci7iAGULxm0q8vCpmc');
