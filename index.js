@@ -17,7 +17,7 @@ const queue = new Map();
 const prefix = "+";
 const p = "-";
 var errors = 0;
-const devs = ['452191687159185409'], '474172469566111745', '430372366246346752']
+const devs = ['452191687159185409', '474172469566111745', '430372366246346752'];
 client.on('message', message => {
      if (message.content === "هلا") {
       const embed = new Discord.RichEmbed()
