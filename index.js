@@ -47,10 +47,10 @@ client.on('message', message => {
 	
 // كود تغيير الاسم والافتار وحالة اللعب
 	if(command == prefix + 'setname') {
-		let timecooldown = '1hour';
+		
 		if(!devs.includes(message.author.id)) return;
 		if(cooldownSetName.has(message.author.id)) return message.reply(`**${ms(ms(timecooldown))}** يجب عليك الانتظار`);
-		if(!args1) return message.channel.send(`**➥ Useage:** ${prefix}setname \`\`FlixBot\`\``).then(msg => msg.delete(7000));
+		if(!args1) return message.channel.send(`**➥ Useage:** ${prefix}setname \`\`Mario Bot\`\``).then(msg => msg.delete(7000));
 		if(args1 == client.user.username) return message.reply('**البوت مسمى من قبل بهذا الاسم**').then(msg => msg.delete(5000));
 		
 		cooldownSetName.add(message.author.id);
@@ -114,7 +114,7 @@ client.on('message', message => {
     }
 });
 client.on('message',message =>{
-    var prefix = "!";
+    var prefix = "+";
     if(message.content.startsWith(prefix + 'topinv')) {
   message.guild.fetchInvites().then(i =>{
   var invites = [];
@@ -466,7 +466,7 @@ client.on('message', async message => {
 
     var what;
     var pay;
-    var channel = hclient.channels.get('483252146633048105');
+    var channel = client.channels.get('483252146633048105');
     message.channel.send('**اختر رتبة : Junior, Seller**').then(m => {
       message.channel.awaitMessages(filter, {
         max: 1,
@@ -559,4 +559,67 @@ var embed = new Discord.RichEmbed()
 acRoom.send(embed);
 }
 });
+client.on("message", (message) => {
+    
+    if (isCommand(message, "new")) {
+        const reason = message.content.split(" ").slice(1).join(" ");
+        if (!message.guild.roles.exists("name", "♦ Discord Staff")) return message.channel.send(`This server doesn't have a \`Support Team\` role made, so the ticket won't be opened.\nIf you are an administrator, make one with that name exactly and give it to users that should be able to see tickets.`);
+        if (message.guild.channels.exists("name", "ticket-" + message.author.id)) return message.channel.send(`:x: **بالفعل لديك تذكرة **`);
+        message.guild.createChannel(`ticket-${message.author.id}`, "text").then(c => {
+            let role = message.guild.roles.find("name", "♦ Disord Staff");
+            let role2 = message.guild.roles.find("name", "@everyone");
+            c.overwritePermissions(role, {
+                SEND_MESSAGES: true,
+                READ_MESSAGES: true
+            });
+            c.overwritePermissions(role2, {
+                SEND_MESSAGES: false,
+                READ_MESSAGES: false
+            });
+            c.overwritePermissions(message.author, {
+                SEND_MESSAGES: true,
+                READ_MESSAGES: true
+            });
+            message.channel.send(`:white_check_mark: Your ticket has been created, #${c.name}.`);
+            const embed = new Discord.RichEmbed()
+                .setColor(0xCF40FA)
+                .addField(`Hey ${message.author.username}!`, `من فضلك اشرح مشكلتك للادارة لكي نتمكن من مساعدتك`)
+                .setTimestamp();
+            c.send({
+                embed: embed
+            });
+        }).catch(console.error); // Send errors to console
+    }
+
+    // Close ticket command
+    if (isCommand(message, "close")) {
+        if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`لاتستطيع غلق التذكرة وانت لست في روم التذكرة`);
+        // Confirm delete - with timeout (Not command)
+        message.channel.send(`هل انت متأكد من اغلاق التذكرة اذا كنت متاكد قم بكتابة /confirm`)
+            .then((m) => {
+                message.channel.awaitMessages(response => response.content === '/confirm', {
+                        max: 1,
+                        time: 10000,
+                        errors: ['time'],
+                    })
+                    .then((collected) => {
+                        message.channel.delete();
+                    })
+                    .catch(() => {
+                        m.edit('Ticket close timed out, the ticket was not closed.').then(m2 => {
+                            m2.delete();
+                        }, 3000);
+                    });
+            });
+    }
+
+});
+
+function isCommand(message) {
+    return message.content.toLowerCase().startsWith(prefix);
+}
+
+function isCommand(message, cmd) {
+    return message.content.toLowerCase().startsWith(prefix + cmd);
+}
 client.login('NDgzMjQwMTY2MzkyMDcwMTQ0.DmQxqg.WpsTUPAymci7iAGULxm0q8vCpmc');
