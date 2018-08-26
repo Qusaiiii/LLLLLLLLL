@@ -358,7 +358,7 @@ const ee =new Discord.RichEmbed()
 }
 }
 });
- c
+ 
  client.on('message', message => {
 if(message.content.startsWith("+slots")) {
   let slot1 = ['🍏', '🍇', '🍒', '🍍', '🍅', '🍆', '🍑', '🍓'];
