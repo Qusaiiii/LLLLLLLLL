@@ -19,14 +19,6 @@ const p = "-";
 var errors = 0;
 const devs = ['452191687159185409', '474172469566111745', '430372366246346752'];
 client.on('message', message => {
-     if (message.content === "هلا") {
-      const embed = new Discord.RichEmbed()
-  .setColor("RANDOM")
-  .setDescription(' **أهلين** ')
-  message.channel.sendEmbed(embed);
-    }
-});
-client.on('message', message => {
      if (message.content === "Developer") {
       const embed = new Discord.RichEmbed()
   .setColor("RANDOM")
@@ -105,14 +97,7 @@ client.on('message', message => {
 			message.delete();
 		   }
 });
-client.on('message', message => {
-     if (message.content === "برب") {
-      const embed = new Discord.RichEmbed()
-  .setColor("RANDOM")
-  .setDescription(' **تيت** ')
-  message.channel.sendEmbed(embed);
-    }
-});
+
 client.on('message',message =>{
     var prefix = "+";
     if(message.content.startsWith(prefix + 'topinv')) {
@@ -373,34 +358,7 @@ const ee =new Discord.RichEmbed()
 }
 }
 });
- client.on('message', message => {
-    if (message.content.startsWith("+id")) {
-var args = message.content.split(" ").slice(1);
-let user = message.mentions.users.first();
-var men = message.mentions.users.first();
- var heg;
- if(men) {
-     heg = men
- } else {
-     heg = message.author
- }
-var mentionned = message.mentions.members.first();
-  var h;
- if(mentionned) {
-     h = mentionned
- } else {
-     h = message.member
- }
-        moment.locale('ar-TN');
-var id = new  Discord.RichEmbed()
-.setColor("RANDOM")
-.addField(': انضمامك لسيرفر قبل', `${moment(h.joinedAt).format('YYYY/M/D HH:mm:ss')} \n \`${moment(h.joinedAt).fromNow()}\``, true)
-.addField(': دخولك لديسكورد قبل', `${moment(heg.createdTimestamp).format('YYYY/M/D HH:mm:ss')} **\n** \`${moment(heg.createdTimestamp).fromNow()}\`` ,true)
-.addField(`: الرتب`, `${message.guild.members.get(h.id).roles.map(r => `\`${r.name}\``).slice(1).join('\n') || 'لايوجد رتب'}`,true)
-.addField(': أخر رسالة', `${message.author.lastMessage}`, true)
-.setThumbnail(heg.avatarURL);
-message.channel.send(id)
-}       });
+ c
  client.on('message', message => {
 if(message.content.startsWith("+slots")) {
   let slot1 = ['🍏', '🍇', '🍒', '🍍', '🍅', '🍆', '🍑', '🍓'];
@@ -466,15 +424,15 @@ client.on('message', async message => {
 
     var what;
     var pay;
-    var channel = client.channels.get('483252146633048105');
-    message.channel.send('**اختر رتبة : Junior, Seller**').then(m => {
+    var channel = client.channels.get('483267969867055115');
+    message.channel.send('**الرتب الموجودة حاليا : Seller**').then(m => {
       message.channel.awaitMessages(filter, {
         max: 1,
         time: 30000,
         errors: ['time']
       }).then(collected => {
         var content = collected.first().content;
-        if(content !== 'Seller' && content !== 'Jnuior') return message.reply('يجب عليك اختيار رتبة من الاثنين المذكورين .');
+        if(content !== 'Seller') return message.reply('يجب عليك اختيار رتبة .');
         role = content;
         message.channel.send(`** ثانية لماذا تريد الرتبة ..\`${role}\`**`).then(m => {
           message.channel.awaitMessages(filter, {
@@ -545,7 +503,7 @@ client.on('message', async message => {
 });
 client.on('message',async message => {
 let mention = message.mentions.members.first();
-let acRoom = client.channels.get('483252146633048105');
+let acRoom = client.channels.get('483267969867055115');
 if(message.content.startsWith(prefix + "رفض")) {
 if(message.guild.id !== '468068936848637972') return;
 if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return;
@@ -558,6 +516,29 @@ var embed = new Discord.RichEmbed()
 .setFooter(`© Mario System.`);
 acRoom.send(embed);
 }
+});
+client.on('message',async message => {
+  let mention = message.mentions.members.first();
+  let role = message.content.split(" ").slice(2).join(" ");
+  let mySupport = message.guild.roles.find('name',role);
+  let acRoom = client.channels.get('483268290957934593');
+  if(message.content.startsWith(prefix + "قبول")) {
+    if(message.guild.id !== '468068936848637972') return;
+    if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return;
+    if(!mention) return message.reply('منشن شخص');
+    if(!role) return message.reply('ادخل اسم رتبة');
+    if(!mySupport) return message.reply('هذه الرتبة غير موجودة');
+    if(mention.roles.has(mySupport)) return message.reply('هذا الشخص معه الرتبة مسبقا');
+
+    mention.addRole(mySupport).then(() => {
+      var embed = new Discord.RichEmbed()
+      .setTitle(':white_check_mark:| تم قبول شخص')
+      .addField('» تم قبول', `${mention}`,true)
+      .addField('» بواسطة', `${message.author}`,true)
+      .setFooter(`© Mario System.`);
+      acRoom.send(embed);
+    });
+  }
 });
 client.on("message", (message) => {
     
@@ -622,4 +603,105 @@ function isCommand(message) {
 function isCommand(message, cmd) {
     return message.content.toLowerCase().startsWith(prefix + cmd);
 }
+client.on('message', message => { 
+if(message.content.startsWith(prefix + 'sug')) {
+      if(!message.channel.guild) return message.reply(`هذا الأمر فقط ل السيرفرات :x:`);
+   let args = message.content.split(" ").slice(1);
+   var ID = message.author.id 
+   var emben = new Discord.RichEmbed()
+   .setTimestamp()
+   .setTitle(`:x: Error`)
+   .setDescription(`الرجاء كتابت إقتراحك بعد الأمر `)
+   if(!args.join(" ")) return message.channel.send(emben).then(message => {message.delete(50000)});
+   var embet = new Discord.RichEmbed()
+   .setTitle(`:white_check_mark: | Success!`)
+   .setTimestamp()
+   .setDescription(`شكراً على اقتراحك !`)
+.addField(`إقتراحك : `,args.join(" "))
+   var embed = new Discord.RichEmbed()
+   .setTimestamp()
+   .setColor('RANDOM')
+   .setThumbnail(message.author.avatarURL)
+   .setFooter(`${message.author.username}#${message.author.discriminator}`)
+   .setTitle(`${client.user.username}`)
+   .setURL(`${client.user.avatarURL}`)
+   .setDescription(`**
+**المقترح** :\n <@${ID}>\n
+**الإقتراح** :  \`\`\`${args.join(" ")}\`\`\`**`)
+           client.channels.get("483268023755603988").send(embed)
+  message.channel.sendEmbed(embet).then(message => {message.delete(50000)})
+            message.react("📩")
+}
+});
+client.on('message', message => {
+if (message.content.startsWith('+help')) { /// This is The DMS Code Send The Help In DMS // Code By NotGucci
+    let pages = [`
+╭━╮╭━╮╱╱╱╱╱╱╱╱╱╭━━━╮╱╱╱╱╱╱╱╭╮
+┃┃╰╯┃┃╱╱╱╱╱╱╱╱╱┃╭━╮┃╱╱╱╱╱╱╭╯╰╮
+┃╭╮╭╮┣━━┳━┳┳━━╮┃╰━━┳╮╱╭┳━━╋╮╭╋━━┳╮╭╮╱╭╮
+┃┃┃┃┃┃╭╮┃╭╋┫╭╮┃╰━━╮┃┃╱┃┃━━┫┃┃┃┃━┫╰╯┃╭╯╰╮
+┃┃┃┃┃┃╭╮┃┃┃┃╰╯┃┃╰━╯┃╰━╯┣━━┃┃╰┫┃━┫┃┃┃╰╮╭╯
+╰╯╰╯╰┻╯╰┻╯╰┻━━╯╰━━━┻━╮╭┻━━╯╰━┻━━┻┻┻╯╱╰╯
+╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━╯┃
+╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰━━╯
+
+**الأوامر العامة **
+**+sug : للاقتراح **
+**+تقديم | للتقديم على رتبة**
+**+topinv : لرؤية المتصدرين فالدعوات **
+**+discrim : لرؤية الاشخاص الذين لديهم نفس التاق **
+**+new :  لأنشاء تذكرة**
+**+nick : لتغير اسمك فالسيرفر **	 
+**+تقيم : for give a rate **
+**+close : لغلق التذكرة **
+**+server : لرؤية معلومات السيرفر **
+**+slots : Game **
+**+avatar : لروية صورتك **
+		 
+		 
+**اوامر ادارة السيرفر **
+**+رفض **
+**+قبول **
+**+role **
+   `]
+    let page = 1;
+
+    let embed = new Discord.RichEmbed()
+    .setColor('RANDOM')
+    .setFooter(`Page ${page} of ${pages.length}`)
+    .setDescription(pages[page-1])
+
+    message.author.sendEmbed(embed).then(msg => {
+
+        msg.react('◀').then( r => {
+            msg.react('▶')
+
+
+        const backwardsFilter = (reaction, user) => reaction.emoji.name === '◀' && user.id === message.author.id;
+        const forwardsFilter = (reaction, user) => reaction.emoji.name === '▶' && user.id === message.author.id;
+
+
+        const backwards = msg.createReactionCollector(backwardsFilter, { time: 2000000});
+        const forwards = msg.createReactionCollector(forwardsFilter, { time: 2000000});
+
+
+
+        backwards.on('collect', r => {
+            if (page === 1) return;
+            page--;
+            embed.setDescription(pages[page-1]);
+            embed.setFooter(`Page ${page} of ${pages.length}`);
+            msg.edit(embed)
+        })
+        forwards.on('collect', r => {
+            if (page === pages.length) return;
+            page++;
+            embed.setDescription(pages[page-1]);
+            embed.setFooter(`Page ${page} of ${pages.length}`);
+            msg.edit(embed)
+        })
+        })
+    })
+    }
+}); 
 client.login('NDgzMjQwMTY2MzkyMDcwMTQ0.DmQxqg.WpsTUPAymci7iAGULxm0q8vCpmc');
