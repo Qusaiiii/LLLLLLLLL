@@ -98,33 +98,7 @@ client.on('message', message => {
 		   }
 });
 
-client.on('message',message =>{
-    var prefix = "+";
-    if(message.content.startsWith(prefix + 'topinv')) {
-  message.guild.fetchInvites().then(i =>{
-  var invites = [];
-   
-  i.forEach(inv =>{
-    var [invs,i]=[{},null];
-     
-    if(inv.maxUses){
-        invs[inv.code] =+ inv.uses+"/"+inv.maxUses;
-    }else{
-        invs[inv.code] =+ inv.uses;
-    }
-        invites.push(`invite: ${inv.url} inviter: ${inv.inviter} \`${invs[inv.code]}\`;`);
-   
-  });
-  var embed = new Discord.RichEmbed()
-  .setColor("#000000")
-  .setDescription(`${invites.join(`\n`)+'\n\n**By:** '+message.author}`)
-  .setThumbnail("https://cdn.discordapp.com/avatars/477815629684932629/89ec1c51810d79560c5baae2fcde41d2.png?size=2048")
-           message.channel.send({ embed: embed });
-   
-  });
-   
-    }
-  });
+
 client.on('message', message => {
 			 if(message.content.startsWith(prefix + 'تقيم')) {
          	let ratus = message.mentions.members.first();
@@ -636,19 +610,16 @@ if(message.content.startsWith(prefix + 'sug')) {
 client.on('message', message => {
 if (message.content.startsWith('+help')) { /// This is The DMS Code Send The Help In DMS // Code By NotGucci
     let pages = [`
-╭━╮╭━╮╱╱╱╱╱╱╱╱╱╭━━━╮╱╱╱╱╱╱╱╭╮
-┃┃╰╯┃┃╱╱╱╱╱╱╱╱╱┃╭━╮┃╱╱╱╱╱╱╭╯╰╮
-┃╭╮╭╮┣━━┳━┳┳━━╮┃╰━━┳╮╱╭┳━━╋╮╭╋━━┳╮╭╮╱╭╮
-┃┃┃┃┃┃╭╮┃╭╋┫╭╮┃╰━━╮┃┃╱┃┃━━┫┃┃┃┃━┫╰╯┃╭╯╰╮
-┃┃┃┃┃┃╭╮┃┃┃┃╰╯┃┃╰━╯┃╰━╯┣━━┃┃╰┫┃━┫┃┃┃╰╮╭╯
-╰╯╰╯╰┻╯╰┻╯╰┻━━╯╰━━━┻━╮╭┻━━╯╰━┻━━┻┻┻╯╱╰╯
-╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━╯┃
-╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰━━╯
+╭━╮╭━╮
+┃┃╰╯┃┃
+┃╭╮╭╮┣━━┳━┳┳━━╮
+┃┃┃┃┃┃╭╮┃╭╋┫╭╮┃
+┃┃┃┃┃┃╭╮┃┃┃┃╰╯┃
+╰╯╰╯╰┻╯╰┻╯╰┻━━╯
 
 **الأوامر العامة **
 **+sug : للاقتراح **
-**+تقديم | للتقديم على رتبة**
-**+topinv : لرؤية المتصدرين فالدعوات **
+**+تقديم**
 **+discrim : لرؤية الاشخاص الذين لديهم نفس التاق **
 **+new :  لأنشاء تذكرة**
 **+nick : لتغير اسمك فالسيرفر **	 
