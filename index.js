@@ -477,7 +477,7 @@ client.on('message', async message => {
 });
 client.on('message',async message => {
 let mention = message.mentions.members.first();
-let acRoom = client.channels.get('483267969867055115');
+let acRoom = client.channels.get('483268290957934593');
 if(message.content.startsWith(prefix + "رفض")) {
 if(message.guild.id !== '339856040638283797') return;
 if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return;
@@ -605,7 +605,7 @@ if(message.content.startsWith(prefix + 'sug')) {
            client.channels.get("483268023755603988").send(embed)
   message.channel.sendEmbed(embet).then(message => {message.delete(50000)})
             message.react("📩")
-	    client.react(":481934332693577730:")
+	    
 }
 });
 client.on('message', message => {
