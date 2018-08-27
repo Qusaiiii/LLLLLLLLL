@@ -35,8 +35,8 @@ client.on('message', message => {
 		if(message.author.bot) return;
 		if(message.channel.type === 'dm') return;
 		if(!message.guild.channels.get('483627241603989504')) return;
-		if(cooldownSurvival.has(message.author.id)) return message.reply('**لقد قمت بالتقديم مسبقا**');
-		if(!mc) return message.channel.send(`**➥ Useage:** ${prefix}survival-join <اسمك بماين كرافت>`).then(msg => msg.delete(5000));
+	
+		if(!mc) return message.channel.send(`**➥ Useage:** ${prefix}beta-join <اسمك بماين كرافت>`).then(msg => msg.delete(5000));
 		if(mc.length > 20) return message.reply('**هذا ليس اسم بماين كرافت**').then(msg => msg.delete(3000));
 		if(mc.length < 3) return message.reply('**هذا ليس اسم بماين كرافت**').then(msg => msg.delete(3000));
 		
