@@ -40,7 +40,6 @@ client.on('message', message => {
 		if(mc.length > 20) return message.reply('**هذا ليس اسم بماين كرافت**').then(msg => msg.delete(3000));
 		if(mc.length < 3) return message.reply('**هذا ليس اسم بماين كرافت**').then(msg => msg.delete(3000));
 		
-		cooldownSurvival.add(message.author.id);
 		
 		var done = new Discord.RichEmbed()
 		.setDescription(`**تم ارسال تقديمك بنجاح !**\n\n**➥ اسمك بماين كرافت**\n[ ${mc} ]`)
