@@ -27,6 +27,47 @@ client.on('message', message => {
     }
 });
 client.on('message', message => {
+	var command = message.content.toLowerCase().split(" ")[0];
+	var mc = message.content.split(' ').slice(1).join(' ');
+	var player = message.author.id;
+	
+	if(command == prefix + 'survival-join') {
+		if(message.author.bot) return;
+		if(message.channel.type === 'dm') return;
+		if(!message.guild.channels.get('483627241603989504')) return;
+		if(cooldownSurvival.has(message.author.id)) return message.reply('**لقد قمت بالتقديم مسبقا**');
+		if(!mc) return message.channel.send(`**➥ Useage:** ${prefix}survival-join <اسمك بماين كرافت>`).then(msg => msg.delete(5000));
+		if(mc.length > 20) return message.reply('**هذا ليس اسم بماين كرافت**').then(msg => msg.delete(3000));
+		if(mc.length < 3) return message.reply('**هذا ليس اسم بماين كرافت**').then(msg => msg.delete(3000));
+		
+		cooldownSurvival.add(message.author.id);
+		
+		var done = new Discord.RichEmbed()
+		.setDescription(`**تم ارسال تقديمك بنجاح !**\n\n**➥ اسمك بماين كرافت**\n[ ${mc} ]`)
+		.setColor('GRAY')
+		.setThumbnail(client.user.avatarURL)
+		.setTimestamp()
+		.setFooter(`${message.author.username}#${message.author.discriminator}`, message.author.avatarURL);
+
+		var apply = new Discord.RichEmbed()
+		.setThumbnail(client.user.avatarURL)
+		.setDescription(`**➥ الاسم**\n<@${player}>\n\n**➥ الاسم بماين كرافت**\n[ ${mc} ]`)
+		.setTimestamp()
+		.setFooter(`${message.author.username}#${message.author.discriminator}`, message.author.avatarURL)
+
+		message.channel.send(done).then(msg => msg.delete(5000));
+		message.guild.channels.get("483267969867055115").send(apply).then(msg => {
+			msg.react('✅').then(() => msg.react('❎'))
+
+			let YesFilter = (reaction, user) => reaction.emoji.name === '✅'  && user.id === ('282350776456839169');
+			let NoFilter = (reaction, user) => reaction.emoji.name === '❎' && user.id === ('282350776456839169');
+
+			let aceept = msg.createReactionCollector(YesFilter);
+			let noaccept = msg.createReactionCollector(NoFilter);
+	}
+})
+
+client.on('message', message => {
 	var args = message.content.split(' ');
 	var args1 = message.content.split(' ').slice(1).join(' ');
 	var args2 = message.content.split(' ')[2];
@@ -41,11 +82,8 @@ client.on('message', message => {
 	if(command == prefix + 'setname') {
 		
 		if(!devs.includes(message.author.id)) return;
-		if(cooldownSetName.has(message.author.id)) return message.reply(`**${ms(ms(timecooldown))}** يجب عليك الانتظار`);
 		if(!args1) return message.channel.send(`**➥ Useage:** ${prefix}setname \`\`Mario Bot\`\``).then(msg => msg.delete(7000));
 		if(args1 == client.user.username) return message.reply('**البوت مسمى من قبل بهذا الاسم**').then(msg => msg.delete(5000));
-		
-		cooldownSetName.add(message.author.id);
 		client.user.setUsername(args1);
 		message.reply(`\`\`${args1}\`\` **تم تغيير اسم البوت الى**`);
 		
