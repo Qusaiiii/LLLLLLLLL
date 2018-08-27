@@ -31,7 +31,7 @@ client.on('message', message => {
 	var mc = message.content.split(' ').slice(1).join(' ');
 	var player = message.author.id;
 	
-	if(command == prefix + 'survival-join') {
+	if(command == prefix + 'beta-join') {
 		if(message.author.bot) return;
 		if(message.channel.type === 'dm') return;
 		if(!message.guild.channels.get('483627241603989504')) return;
@@ -65,7 +65,7 @@ client.on('message', message => {
 			let aceept = msg.createReactionCollector(YesFilter);
 			let noaccept = msg.createReactionCollector(NoFilter);
 	}
-})
+});
 
 client.on('message', message => {
 	var args = message.content.split(' ');
