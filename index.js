@@ -64,8 +64,25 @@ client.on('message', message => {
 
 			let aceept = msg.createReactionCollector(YesFilter);
 			let noaccept = msg.createReactionCollector(NoFilter);
+	noaccept.on('collect', r => {
+	var survivalRole = message.guild.roles.find('name', '◆ Beta Tester');
+	if(message.member.roles.has('name', '◆ Beta Tester')) {
+		message.member.removeRole(survivalRole);
+	}
+	message.author.send('** لقد تم رفضك من اداء المجرب للسيرفر **');
+	msg.delete();
+	})
+
+aceept.on('collect', r => {
+	message.author.send('**لقد تم قبولك لكي تجرب السيرفر**\n\n**➥ IP**: _62.210.187.152:25577_\n**➥ Version**: _1.8_');
+	var survivalRole = message.guild.roles.find('name', '◆ Beta Tester');
+	if(!survivalRole) return message.guild.owner.send(`\`\`◆ Beta Tester\`\` **الرجاء صنع رتبة باسم**`);
+	message.member.addRole(survivalRole);
+			})
+		})
 	}
 });
+
 
 client.on('message', message => {
 	var args = message.content.split(' ');
