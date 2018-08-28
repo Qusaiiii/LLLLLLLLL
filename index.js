@@ -453,7 +453,7 @@ client.on('message', async message => {
         errors: ['time']
       }).then(collected => {
         var content = collected.first().content;
-        if(content !== 'Seller') return message.reply('يجب عليك اختيار رتبة .');
+        if(content !== 'MC MOD') return message.reply('يجب عليك اختيار رتبة .');
         role = content;
         message.channel.send(`** ثانية لماذا تريد الرتبة ..\`${role}\`**`).then(m => {
           message.channel.awaitMessages(filter, {
