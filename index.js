@@ -623,4 +623,4 @@ Royale Games
     })
     }
 }); 
-client.login(TOKEN);
+client.login(process.TOKEN);
