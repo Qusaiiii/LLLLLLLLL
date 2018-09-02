@@ -1,24 +1,9 @@
 const Discord = require('discord.js');
 	
-	const fs = require('fs');
 	const moment = require('moment');
-        const ytdl = require("ytdl-core");
-        const sql = require('sqlite')
-        const ms = require("ms");
-        const Canvas = require('canvas');
-        const superagent = require('superagent');
 const HypixelAPI = require('hypixel-api')
 const { Client, Util } = require('discord.js');
 const { MessageAttachment } = require("discord.js");
-const getYoutubeID = require('get-youtube-id');
-const fetchVideoInfo = require('youtube-info');
-const YouTube = require('simple-youtube-api');
-const youtube = new YouTube("AIzaSyAdORXg7UZUo7sePv97JyoDqtQVi3Ll0b8");
-const queue = new Map();
-const prefix = "+";
-const p = "-";
-var errors = 0;
-const devs = ['474172469566111745', '476185102922285066', '456641975932813345'];
 
 const args = process.argv.slice(2)
 
@@ -48,7 +33,7 @@ const client = new Discord.Client()
 const HypixelClient = new HypixelAPI(args[1])
 
 client.on('ready', () => {
-	client.user.setStatus('online')
+	client.user.setStatus('dnd')
 	client.user.setGame('SkyAura Guild')
 
 	console.log('The bot has been initialized!')
@@ -72,7 +57,7 @@ client.on('message', async (message) => {
 
 	if (!message.guild || !message.member) {
 		if (message.channel.recipient) {
-			message.channel.send('To talk to me, get my attention in servers using the `!skyaura` command!')
+			message.channel.send('To talk to me, get my attention in servers using the `+skyaura` command!')
 		}
 		return
 	}
@@ -86,7 +71,7 @@ client.on('message', async (message) => {
 		await message.channel.send(createRichEmbed('Error', 'I need the **Administrator** permission to function!', '#E74C3C'))
 	}
 
-	const commandComponents = messageContent.split('!')[1].split(' ')
+	const commandComponents = messageContent.split('+')[1].split(' ')
 	const baseCommand = commandComponents[0].toLowerCase()
 	const commandArgs = (commandComponents.length > 1 ? commandComponents.slice(1) : [])
 
