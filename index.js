@@ -317,7 +317,7 @@ if(!message.guild.member(message.author).hasPermission("KICK_MEMBERS")) return m
 if(!message.guild.member(client.user).hasPermission("KICK_MEMBERS")) return message.reply(":x: **ليس معي الصلاحيات الكافية**");
 let user = message.mentions.users.first();
 
-if (message.mentions.users.size < 1) return message.reply("- **منشن شخص**");
+if (message.mentions.users.size < 1) return message.reply("**Mention a person**");
 if (!message.guild.member(user)
 .bannable) return message.reply(":x:**The bot must be higher than the person to be Kicked**");
 
@@ -535,7 +535,7 @@ const ee =new Discord.RichEmbed()
 }
 });
 client.on('message', message => {
-    if (message.content.startsWith("!id")) {
+    if (message.content.startsWith("+id")) {
 var args = message.content.split(" ").slice(1);
 let user = message.mentions.users.first();
 var men = message.mentions.users.first();
