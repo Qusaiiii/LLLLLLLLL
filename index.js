@@ -4,7 +4,6 @@ const Discord = require('discord.js');
         const ms = require("ms");
         const Canvas = require('canvas');
         const superagent = require('superagent');
-const { Client, Util } = require('discord.js');
 const { MessageAttachment } = require("discord.js");
 	const moment = require('moment');
 const fs = require('fs');
