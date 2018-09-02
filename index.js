@@ -9,7 +9,6 @@ const { MessageAttachment } = require("discord.js");
 const fs = require('fs');
 const HypixelAPI = require('hypixel-api')
 const { Client, Util } = require('discord.js');
-const { MessageAttachment } = require("discord.js");
 const prefix = "+";
 const args = process.argv.slice(2)
 
