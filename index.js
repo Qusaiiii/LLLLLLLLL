@@ -311,10 +311,10 @@ command = command.slice(prefix.length);
 let args = message.content.split(" ").slice(1);
 
 if (command == "kick") {
-             if(!message.channel.guild) return message.reply(':x: **ليس لديك الصلاحيات الكافية**');
+             if(!message.channel.guild) return message.reply(':x: **You dont have permissions**');
        
-if(!message.guild.member(message.author).hasPermission("KICK_MEMBERS")) return message.reply(":x:**انت لا تملك الصلاحيات المطلوبه**");
-if(!message.guild.member(client.user).hasPermission("KICK_MEMBERS")) return message.reply(":x: **ليس معي الصلاحيات الكافية**");
+if(!message.guild.member(message.author).hasPermission("KICK_MEMBERS")) return message.reply(":x:**You dont have permissions**");
+if(!message.guild.member(client.user).hasPermission("KICK_MEMBERS")) return message.reply(":x: **I Dont have permissions**");
 let user = message.mentions.users.first();
 
 if (message.mentions.users.size < 1) return message.reply("**Mention a person**");
@@ -599,12 +599,12 @@ var args = message.content.split(' ');
 	var command = message.content.toLowerCase().split(" ")[0];
   let warns = JSON.parse(fs.readFileSync("./warnings.json", "utf8"));
     if(command == prefix + 'warn') {
-    if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('\`\`MANAGE_MESSAGES\`\` **انت لا تمتلك صلاحية**').then(msg => msg.delete(5000));
+    if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('\`\`MANAGE_MESSAGES\`\` **Permission Not Found**').then(msg => msg.delete(5000));
     let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
     if(!wUser) return message.channel.send(`**• Useage:** ${prefix}warn \`\`@Name\`\` reason`).then(msg => msg.delete(5000));
-    if(wUser.id === message.author.id) return message.reply('**لا يمكنك اعطاء نفسك وارن**').then(msg => msg.delete(5000));
-    if(wUser.hasPermission('ADMINISTRATOR')) return message.reply('**لا يمكنني اعطاء هذا الشخص وارن لانه اداري**').then(msg => msg.delete(5000));
-    if (!message.guild.member(wUser).kickable) return message.reply('**لا يمكنني اعطاء هذا الشخص وارن لان رتبته فوق رتبتي**').then(msg => msg.delete(5000));
+    if(wUser.id === message.author.id) return message.reply('**Lmao, you cant warn yourself**').then(msg => msg.delete(5000));
+    if(wUser.hasPermission('ADMINISTRATOR')) return message.reply('**I Cant warn a staff member**').then(msg => msg.delete(5000));
+    if (!message.guild.member(wUser).kickable) return message.reply('**The bot must be higher than the person to be Warned**').then(msg => msg.delete(5000));
     let reason = args.slice(2).join(" ");
     if(!reason) return message.channel.send(`**• Useage:** ${prefix}warn @name \`\`Reason\`\``).then(msg => msg.delete(7000));
 	let muterole = message.guild.roles.find('name', 'Muted') || message.guild.roles.get(r => r.name === 'Muted');
