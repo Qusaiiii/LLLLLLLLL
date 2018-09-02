@@ -235,7 +235,7 @@ if(ratus.user.id === message.author.id) {
 });
 const hastebin = require('hastebin-gen');
 client.on('message', message => {
-var PREFIX = '!';
+var PREFIX = '+';
     if(message.content.startsWith(PREFIX + 'discrim')) {
             var args = message.content.split(' ').slice(1).join(' ');
 }
@@ -256,7 +256,7 @@ hastebin(`${array.slice(0, 30).join('\n')}`, 'txt').then(l => {
 }).catch(console.error);
 });
 client.on('message' , message => {
-var PREFIX = '!';
+var PREFIX = '+';
 if(message.content === `${PREFIX}discrim`) {
                       let array = [];
                       var i = 0;
@@ -274,7 +274,7 @@ hastebin(`${array.slice(0, 30).join('\n')}`, 'txt').then(l => {
         }
 });
 client.on('message', message => {
-var prefix = "!";
+var prefix = "+";
 
     if (message.author.id === client.user.id) return;
     if (message.guild) {
@@ -282,15 +282,15 @@ var prefix = "!";
     let args = message.content.split(' ').slice(1).join(' ');
 if(message.content.split(' ')[0] == prefix + 'bc') {
     if (!args[1]) {
-message.channel.send("**| Hyped. | -bc <message> **");
+message.channel.send("**| SkyAura. | -bc <message> **");
 return;
 }
         message.guild.members.forEach(m => {
    if(!message.member.hasPermission('ADMINISTRATOR')) return;
             var bc = new Discord.RichEmbed()
-            .addField('» السيرفر :', `${message.guild.name}`)
-            .addField('» المرسل : ', `<@${message.author.id}>`)
-            .addField(' » الرسالة : ', args)
+            .addField('» Server :', `${message.guild.name}`)
+            .addField('» Sender : ', `<@${message.author.id}>`)
+            .addField(' » Message : ', args)
             .setColor('#ff0000')
             m.send(`${m}`,{embed: bc})
     if(message.attachments.first()){
@@ -563,7 +563,7 @@ var id = new  Discord.RichEmbed()
 message.channel.send(id)
 }       });
 client.on('message', message => {
-if(message.content.startsWith("!slots")) {
+if(message.content.startsWith("+slots")) {
   let slot1 = ['🍏', '🍇', '🍒', '🍍', '🍅', '🍆', '🍑', '🍓'];
   let slots1 = `${slot1[Math.floor(Math.random() * slot1.length)]}`;
   let slots2 = `${slot1[Math.floor(Math.random() * slot1.length)]}`;
@@ -590,5 +590,175 @@ client.on('message', function(message) {
           return;
         }
     }
+});
+client.on('message', message => {
+var args = message.content.split(' ');
+	var args1 = message.content.split(' ').slice(1).join(' ');
+	var args2 = message.content.split(' ')[2];
+	var args3 = message.content.split(' ').slice(3).join(' ');
+	var command = message.content.toLowerCase().split(" ")[0];
+  let warns = JSON.parse(fs.readFileSync("./warnings.json", "utf8"));
+    if(command == prefix + 'warn') {
+    if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('\`\`MANAGE_MESSAGES\`\` **انت لا تمتلك صلاحية**').then(msg => msg.delete(5000));
+    let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
+    if(!wUser) return message.channel.send(`**• Useage:** ${prefix}warn \`\`@Name\`\` reason`).then(msg => msg.delete(5000));
+    if(wUser.id === message.author.id) return message.reply('**لا يمكنك اعطاء نفسك وارن**').then(msg => msg.delete(5000));
+    if(wUser.hasPermission('ADMINISTRATOR')) return message.reply('**لا يمكنني اعطاء هذا الشخص وارن لانه اداري**').then(msg => msg.delete(5000));
+    if (!message.guild.member(wUser).kickable) return message.reply('**لا يمكنني اعطاء هذا الشخص وارن لان رتبته فوق رتبتي**').then(msg => msg.delete(5000));
+    let reason = args.slice(2).join(" ");
+    if(!reason) return message.channel.send(`**• Useage:** ${prefix}warn @name \`\`Reason\`\``).then(msg => msg.delete(7000));
+	let muterole = message.guild.roles.find('name', 'Muted') || message.guild.roles.get(r => r.name === 'Muted');
+    if(!muterole) try {
+		message.guild.createRole({
+			name: "Muted",
+			permissions: 0
+			}).then(r => {
+				message.guild.channels.forEach(c => {
+					c.overwritePermissions(r , {
+						SEND_MESSAGES: false,
+						READ_MESSAGE_HISTORY: false,
+						ADD_REACTIONS: false,
+						SPEAK: false
+						});
+				});
+			});
+			} catch(e) {
+				console.log(e.stack);
+			}
+
+  if(!warns[wUser.id]) warns[wUser.id] = {
+    warns: 0
+  };
+
+  warns[wUser.id].warns++;
+
+
+  fs.writeFile("./warnings.json", JSON.stringify(warns), (err) => {
+    if (err) console.log(err)
+  });
+
+  wUser.send(`**Hyped Communtiy**\n\n\n**• You got a warn**\n\n**• Server:**\n➤ [ ${message.guild.name} ]\n\n**• By:**\n• [ ${message.author.username}#${message.author.discriminator} ]\n\n**• Reason:**\n➤ [ ${reason} ]\n\n**• Warn number:**\n➤[ ${warns[wUser.id].warns} ]\n\n\n**SkyAura**`);
+
+  let warnEmbed = new Discord.RichEmbed()
+  .setTitle(':no_entry_sign: **[WARN]**')
+  .setThumbnail(client.user.avatarURL)
+  .setColor('GRAY')
+  .addField('User:', `<@${wUser.id}>`, true)
+  .addField('By:', `<@${message.author.id}>`, true)
+  .addField('Reason:', `**➤** [ **${reason}** ]`, true)
+  .addField('Warn Number:', `**➤** [ **${warns[wUser.id].warns}** ]`, true)
+  .setTimestamp()
+  .setFooter(`${message.author.username}#${message.author.discriminator}`, message.author.avatarURL)
+
+  let warnchannel = message.guild.channels.find(`name`, "mod-log");
+  if(!warnchannel) return;
+
+  warnchannel.send(warnEmbed);
+
+  if(warns[wUser.id].warns == 1){
+	  message.channel.send(`<@${wUser.id}>, \`\`Warn Number: ${warns[wUser.id].warns}\`\` ${reason}`);
+	  message.delete();
+  }
+
+if(warns[wUser.id].warns == 2){
+	let mutetime1 = "1h";
+    wUser.addRole(muterole);
+	message.channel.send(`<@${wUser.id}>, \`\`Warn Number: ${warns[wUser.id].warns}\`\` ${reason} :zipper_mouth:`);
+	message.delete();
+	wUser.setMute(true);
+
+    setTimeout(function(){
+      wUser.removeRole(muterole);
+	  wUser.setMute(false);
+    }, ms(mutetime1))
+  }
+    if(warns[wUser.id].warns == 3){
+    let mutetime2 = "6h";
+    wUser.addRole(muterole);
+	wUser.setMute(true);
+	message.channel.send(`<@${wUser.id}>, \`\`Warn Number: ${warns[wUser.id].warns}\`\` ${reason} :zipper_mouth:`);
+	message.delete();
+
+    setTimeout(function(){
+      wUser.removeRole(muterole);
+	  wUser.setMute(false);
+    }, ms(mutetime2))
+  }
+    if(warns[wUser.id].warns == 4){
+    let mutetime3 = "12h";
+    wUser.addRole(muterole);
+	wUser.setMute(true);
+	message.channel.send(`<@${wUser.id}>, \`\`Warn Number: ${warns[wUser.id].warns}\`\` ${reason} :zipper_mouth:`);
+	message.delete();
+
+    setTimeout(function(){
+      wUser.removeRole(muterole);
+	  wUser.setMute(false);
+    }, ms(mutetime3))
+  }
+    if(warns[wUser.id].warns == 5){
+    let mutetime4 = "1d";
+    wUser.addRole(muterole.id);
+	wUser.setMute(true);
+	message.channel.send(`<@${wUser.id}>, \`\`Warn Number: ${warns[wUser.id].warns}\`\` ${reason} :zipper_mouth:`);
+	message.delete();
+
+    setTimeout(function(){
+      wUser.removeRole(muterole);
+	  wUser.setMute(false);
+    }, ms(mutetime4))
+  }
+      if(warns[wUser.id].warns == 6){
+    let mutetime5 = "3d";
+    wUser.addRole(muterole);
+	wUser.setMute(true);
+	message.channel.send(`<@${wUser.id}>, \`\`Warn Number: ${warns[wUser.id].warns}\`\` ${reason} :zipper_mouth:`);
+	message.delete();
+
+    setTimeout(function(){
+      wUser.removeRole(muterole.id);
+	  wUser.setMute(false);
+    }, ms(mutetime5))
+  }
+    if(warns[wUser.id].warns == 7){
+    message.guild.member(wUser).ban({ days: 1, reason: reason });
+	message.channel.send(`<@${wUser.id}>, \`\`Warn Number: ${warns[wUser.id].warns}\`\` ${reason} :airplane:`);
+	message.delete();
+  }
+    if(warns[wUser.id].warns == 8){
+    message.guild.member(wUser).ban({ days: 3, reason: reason });
+	message.channel.send(`<@${wUser.id}>, \`\`Warn Number: ${warns[wUser.id].warns}\`\` ${reason} :airplane:`);
+	message.delete();
+  }
+    if(warns[wUser.id].warns == 9){
+    message.guild.member(wUser).ban({ days: 7, reason: reason });
+	message.channel.send(`<@${wUser.id}>, \`\`Warn Number: ${warns[wUser.id].warns}\`\` ${reason} :airplane:`);
+	message.delete();
+  }
+  if(warns[wUser.id].warns == 10){
+
+      message.guild.member(wUser).ban({ reason: reason });
+	message.channel.send(`<@${wUser.id}>, \`\`Warn Number: ${warns[wUser.id].warns}\`\` ${reason} :airplane:`);
+	message.delete();
+  }
+}
+    if(command == prefix + 'warns') {
+		if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('\`\`MANAGE_MESSAGES\`\` **Permission Not found**').then(msg => msg.delete(5000));
+		let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
+		if(!wUser) return message.channel.send(`**• Useage:** ${prefix}warns \`\`Name\`\``).then(msg => msg.delete(7000));
+		if(wUser.hasPermission('ADMINISTRATOR')) return message.reply('**摇 ȡՎՠȏȑ�').then(msg => msg.delete(3000));
+		 if(!warns[wUser.id]) warns[wUser.id] = {
+            warns: 0
+        };
+		let warninfo1 = new Discord.RichEmbed()
+		.setTitle(':no_entry_sign: **[WARN AMOUNT]**')
+		.setThumbnail(client.user.avatarURL)
+		.addField('User:', `<@${muf.id}>`, true)
+		.addField('Warn Number:', `**➤** [ ${warns[wUser.id].warns} ]`, true)
+		.setTimestamp()
+		.setFooter(`${message.author.username}#${message.author.discriminator}`, message.author.avatarURL)
+		message.channel.send(warninfo1);
+		message.delete();
+	   }
 });
 client.login(args[0])
