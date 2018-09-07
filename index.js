@@ -13,4 +13,4 @@ var channel = "487692813509591057";//ايدي الروم
     client.guilds.get(server).channels.get(channel).send('كودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودزكودز ')
     },305);
 })
-client.login("MjkyMzU3NzcxOTQzNDc3MjUy.DnRW-g.EiwkuODh7cwZ_IVZ88sG0xljfL0")
+client.login("MjkyMzU3NzcxOTQzNDc3MjUy.DnRW-g.EiwkuODh7cwZ_lVZ88sG0xIjfL0")
