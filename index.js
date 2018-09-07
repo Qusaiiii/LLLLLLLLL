@@ -3,15 +3,8 @@ const Discord = require('discord.js');
         const sql = require('sqlite')
         const ms = require("ms");
         const Canvas = require('canvas');
-        const client = Discord.Client();
+        const client = new Discord.Client();
         const superagent = require('superagent');
-const { MessageAttachment } = require("discord.js");
-	const moment = require('moment');
-const fs = require('fs');
-const HypixelAPI = require('hypixel-api')
-const { Client, Util } = require('discord.js');
-const prefix = "+";
-const args = process.argv.slice(2)
 
 client.on('ready', async() => {
 var server = "486873746037145601"; // ايدي السررفر
